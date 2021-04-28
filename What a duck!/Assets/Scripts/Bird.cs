@@ -53,5 +53,10 @@ public class Bird : MonoBehaviour
             transform.localScale = new Vector2(-1, 1);
             SetDirection();
         }
+        if (collision.tag == "Bullet")
+        {
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
     }
 }

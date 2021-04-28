@@ -6,6 +6,8 @@ TagManager:
   tags:
   - RightBorder
   - LeftBorder
+  - Bullet
+  - Bird
   layers:
   - Default
   - TransparentFX

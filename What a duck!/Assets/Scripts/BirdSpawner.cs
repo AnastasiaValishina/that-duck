@@ -24,8 +24,8 @@ public class BirdSpawner : MonoBehaviour
 
     IEnumerator SpawnBird()
     {
-        float xPos = Random.Range(-2, 2);
-        Vector2 birdPosition = new Vector2(xPos, -2);
+        float xPos = Random.Range(-2f, 2f);
+        Vector2 birdPosition = new Vector2(xPos, -2.8f);
         Instantiate(birdPrefab, birdPosition, Quaternion.identity);
         yield return new WaitForSeconds(1f);
     }
