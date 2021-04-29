@@ -5,29 +5,29 @@ using UnityEngine;
 public class BirdSpawner : MonoBehaviour
 {
     [SerializeField] Bird birdPrefab;
-    //   [SerializeField] List<GameObject>;
+    [SerializeField] float minDelay, maxDelay;
 
-    bool isActive = true;
-    IEnumerator Start()
+    float nextSpawnTime;
+
+    void Start()
     {
-        for (int i = 0; i < 20; i++)
-        {
-            StartCoroutine(SpawnBird());
-            yield return new WaitForSeconds(1f);
-        }
+
     }
 
     void Update()
     {
-        
+        SpawnBird();
     }
 
-    IEnumerator SpawnBird()
+    void SpawnBird()
     {
-        float xPos = Random.Range(-2f, 2f);
-        Vector2 birdPosition = new Vector2(xPos, -2.8f);
-        Instantiate(birdPrefab, birdPosition, Quaternion.identity);
-        yield return new WaitForSeconds(1f);
+        if (Time.time > nextSpawnTime)
+        {
+            float xPos = Random.Range(-2f, 2f);
+            Vector2 birdPosition = new Vector2(xPos, -2.8f);
+            Instantiate(birdPrefab, birdPosition, Quaternion.identity);
+            nextSpawnTime = Time.time + Random.Range(minDelay, maxDelay);
+        }
     }
 
 }

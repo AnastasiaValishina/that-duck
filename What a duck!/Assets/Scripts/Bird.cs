@@ -5,10 +5,13 @@ using UnityEngine;
 public class Bird : MonoBehaviour
 {
     [SerializeField] float speed = 4f;
+    [SerializeField] float speedChangeIndex = 1f;
+    [SerializeField] float speedChangeInSeconds = 1f;
 
     Vector2 direction;
     float xPos;
     float yPos;
+    float nextSpeedChange;
 
     void Start()
     {
@@ -23,6 +26,7 @@ public class Bird : MonoBehaviour
         }
         SetDirection();
     }
+
     void Update()
     {
         Move();
@@ -31,6 +35,11 @@ public class Bird : MonoBehaviour
     private void Move()
     {
         transform.Translate(direction * speed * Time.deltaTime);
+        if (speedChangeIndex != 0 && Time.time > nextSpeedChange)
+        {
+            speed *= speedChangeIndex;
+            nextSpeedChange = Time.time + speedChangeIndex;
+        }
     }
 
     void SetDirection()
