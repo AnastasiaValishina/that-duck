@@ -7,6 +7,7 @@ public class Bird : MonoBehaviour
     [SerializeField] float speed = 4f;
     [SerializeField] float speedChangeIndex = 1f;
     [SerializeField] float speedChangeInSeconds = 1f;
+    [SerializeField] int scoreValue = 1;
 
     Vector2 direction;
     float xPos;
@@ -64,6 +65,7 @@ public class Bird : MonoBehaviour
         }
         if (collision.tag == "Bullet")
         {
+            ScoreManager.Instance.AddScore(scoreValue);
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }

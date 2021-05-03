@@ -12,8 +12,7 @@ public class Gun : MonoBehaviour
     [SerializeField] float timeBetweenShots = 0.5f;
 
     [Header("UI")]
-    [SerializeField] Transform bulletParentUi;
-    [SerializeField] GameObject bulletUi;
+    [SerializeField] Text bulletAmountText;
 
     Button shootButton;
     int bulletAmount;
@@ -25,21 +24,15 @@ public class Gun : MonoBehaviour
         shootButton = GetComponent<Button>();
         shootButton.onClick.AddListener(ButtonClicked);
         bulletAmount = bulletAmountFull;
-
-        for (int i = 0; i < bulletAmount; i++)
-        {
-            GameObject b = Instantiate(bulletUi, bulletParentUi.position, Quaternion.identity);
-            b.transform.parent = bulletParentUi;
-        }
+        bulletAmountText.text = bulletAmount.ToString();
     }
-   
+
     void Update()
     {
         if (bulletAmount <= 0)
         {
             StartCoroutine(CoolDown());
         }
-        Debug.Log(timeStamp);
     }
 
     void ButtonClicked()
@@ -49,6 +42,7 @@ public class Gun : MonoBehaviour
             Bullet bullet = Instantiate(bulletPrefab, gun.transform.position, Quaternion.identity);
             bullet.transform.parent = gun.transform;
             bulletAmount--;
+            bulletAmountText.text = bulletAmount.ToString();
             timeStamp = Time.time + timeBetweenShots;
         }      
     }
@@ -57,6 +51,7 @@ public class Gun : MonoBehaviour
     {
         yield return new WaitForSeconds(coolDownTime);
         bulletAmount = bulletAmountFull;
+        bulletAmountText.text = bulletAmount.ToString();
     }
 
     void ButtonPressed()
