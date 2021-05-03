@@ -38,7 +38,7 @@ public class Bird : MonoBehaviour
         if (speedChangeIndex != 0 && Time.time > nextSpeedChange)
         {
             speed *= speedChangeIndex;
-            nextSpeedChange = Time.time + speedChangeIndex;
+            nextSpeedChange = Time.time + speedChangeInSeconds;
         }
     }
 
