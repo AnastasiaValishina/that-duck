@@ -13,11 +13,12 @@ public class Gun : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] Text bulletAmountText;
+    [SerializeField] Image coolDownImage;
 
     Button shootButton;
     int bulletAmount;
     float timeStamp;
-
+    bool coolingDown = false;
 
     void Start()
     {
@@ -25,13 +26,14 @@ public class Gun : MonoBehaviour
         shootButton.onClick.AddListener(ButtonClicked);
         bulletAmount = bulletAmountFull;
         bulletAmountText.text = bulletAmount.ToString();
+        coolDownImage.fillAmount = 0f;
     }
 
     void Update()
     {
-        if (bulletAmount <= 0)
+        if (coolingDown)
         {
-            StartCoroutine(CoolDown());
+            coolDownImage.fillAmount -= 1.0f / coolDownTime * Time.deltaTime;
         }
     }
 
@@ -44,11 +46,18 @@ public class Gun : MonoBehaviour
             bulletAmount--;
             bulletAmountText.text = bulletAmount.ToString();
             timeStamp = Time.time + timeBetweenShots;
+
+            if (bulletAmount <= 0)
+            {
+                StartCoroutine(CoolDown());
+            }
         }      
     }
 
     IEnumerator CoolDown()
     {
+        coolDownImage.fillAmount = 1.0f;
+        coolingDown = true;
         yield return new WaitForSeconds(coolDownTime);
         bulletAmount = bulletAmountFull;
         bulletAmountText.text = bulletAmount.ToString();

@@ -53,7 +53,7 @@ public class Bird : MonoBehaviour
     {
         if (collision.tag == "RightBorder")
         {
-            xPos = Random.Range(-1f, 0.2f);
+            xPos = Random.Range(-1f, -0.2f);
             transform.localScale = new Vector2(1, 1);
             SetDirection();
         }

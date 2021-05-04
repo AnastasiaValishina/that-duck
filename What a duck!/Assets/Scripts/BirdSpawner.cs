@@ -32,7 +32,7 @@ public class BirdSpawner : MonoBehaviour
 
             nextSpawnTime = Time.time + Random.Range(minDelay, maxDelay);
 
-            if (delayIndex != 0 && Time.time > nextSpawnTimeChange)
+            if (delayIndex != 0 && Time.time > nextSpawnTimeChange && maxDelay > minDelay)
             {
                 maxDelay *= delayIndex;
                 nextSpawnTimeChange = Time.time + delayChangeInSeconds;
