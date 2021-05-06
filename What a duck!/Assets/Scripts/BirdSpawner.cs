@@ -9,17 +9,41 @@ public class BirdSpawner : MonoBehaviour
     [SerializeField] float delayIndex = 1f;
     [SerializeField] float delayChangeInSeconds;
 
+    [Header("Speed")]
+    public float speed;
+    [SerializeField] float initialSpeed;
+    [SerializeField] float maxSpeed;
+    [SerializeField] float speedChangeIndex = 1f;
+    [SerializeField] float speedChangeInSeconds = 10f;
+
     float nextSpawnTime;
     float nextSpawnTimeChange;
+    float nextSpeedChange;
+
+    static BirdSpawner instance;
+    public static BirdSpawner Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<BirdSpawner>();
+            }
+            return instance;
+        }
+    }
 
     void Start()
     {
         nextSpawnTimeChange = delayChangeInSeconds;
+        nextSpeedChange = speedChangeInSeconds;
+        speed = initialSpeed;
     }
 
     void Update()
     {
         SpawnBird();
+        BirdSpeedChange();
     }
 
     void SpawnBird()
@@ -39,5 +63,12 @@ public class BirdSpawner : MonoBehaviour
             }
         }
     }
-
+    void BirdSpeedChange()
+    {
+        if (speedChangeIndex != 0 && Time.time > nextSpeedChange && speed < maxSpeed)
+        {
+            speed *= speedChangeIndex;
+            nextSpeedChange = Time.time + speedChangeInSeconds;
+        }
+    }
 }

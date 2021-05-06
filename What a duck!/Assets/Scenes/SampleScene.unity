@@ -891,8 +891,8 @@ MonoBehaviour:
     type: 3}
   gun: {fileID: 1615552149}
   bulletAmountFull: 5
-  coolDownTime: 10
-  timeBetweenShots: 1
+  coolDownTime: 6
+  timeBetweenShots: 0.5
   bulletAmountText: {fileID: 967061581}
   coolDownImage: {fileID: 217289567}
 --- !u!1 &967061579
@@ -1345,8 +1345,8 @@ MonoBehaviour:
     type: 3}
   gun: {fileID: 1321649266}
   bulletAmountFull: 5
-  coolDownTime: 10
-  timeBetweenShots: 1
+  coolDownTime: 6
+  timeBetweenShots: 0.5
   bulletAmountText: {fileID: 59863150}
   coolDownImage: {fileID: 1723482860}
 --- !u!1 &1321649266
@@ -1591,8 +1591,8 @@ MonoBehaviour:
     type: 3}
   gun: {fileID: 1892770586}
   bulletAmountFull: 5
-  coolDownTime: 10
-  timeBetweenShots: 1
+  coolDownTime: 6
+  timeBetweenShots: 0.5
   bulletAmountText: {fileID: 984040292}
   coolDownImage: {fileID: 769854045}
 --- !u!1 &1615552149
@@ -1735,6 +1735,11 @@ MonoBehaviour:
   maxDelay: 5
   delayIndex: 0.8
   delayChangeInSeconds: 10
+  speed: 2
+  initialSpeed: 2
+  maxSpeed: 8
+  speedChangeIndex: 1.06
+  speedChangeInSeconds: 8
 --- !u!4 &1653322009
 Transform:
   m_ObjectHideFlags: 0
