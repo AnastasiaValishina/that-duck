@@ -24,14 +24,7 @@ public class Bird : MonoBehaviour
 
     void Update()
     {
-        if (xPos < 0)
-        {
-            transform.localScale = new Vector2(1, 1);
-        }
-        else
-        {
-            transform.localScale = new Vector2(-1, 1);
-        }
+        transform.localScale = (xPos < 0) ? new Vector2(1, 1) : new Vector2(-1, 1);
         Move();
         TurnByTime();
     }
@@ -51,41 +44,31 @@ public class Bird : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "RightBorder")
+        switch (collision.tag)
         {
-            xPos = Random.Range(-1f, -0.2f);
-            SetDirection();
-        }
-        if (collision.tag == "LeftBorder")
-        {
-            xPos = Random.Range(0.2f, 1f);
-            SetDirection();
-        }
-        if (collision.tag == "Bullet")
-        {
-            ScoreManager.Instance.AddScore(scoreValue);
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
+            case "RightBorder":
+                xPos = Random.Range(-1f, -0.2f);
+                SetDirection();
+                break;
+            case "LeftBorder":
+                xPos = Random.Range(0.2f, 1f);
+                SetDirection();
+                break;
+            case "Bullet":
+                ScoreManager.Instance.AddScore(scoreValue);
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                break;
         }
     }
 
     void TurnByTime()
     {
         int possibilityIndex = Random.Range(0, 100);
-        if (possibilityIndex > turnPossibility) 
+        if (possibilityIndex > turnPossibility && Time.time > timeToTurn) 
         {
-            if (Time.time > timeToTurn)
-            {
-                if (xPos < 0)
-                {
-                    xPos = Random.Range(0.2f, 1f);
-                }
-                else
-                {
-                    xPos = Random.Range(-1f, -0.2f);
-                }
-                SetDirection();
-            }
+            xPos = (xPos < 0) ? Random.Range(0.2f, 1f) : Random.Range(-1f, -0.2f);
+            SetDirection();     
         }
     }
 
