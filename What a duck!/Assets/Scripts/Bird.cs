@@ -4,22 +4,38 @@ using UnityEngine;
 
 public class Bird : MonoBehaviour
 {
-    [SerializeField] int scoreValue = 1;
+    int scoreValue = 1;
 
-    [Header("Possibility")]
-    [SerializeField] float minTurnInterval;
-    [SerializeField] float maxTurnInterval;
-    [Range(0, 100)] [SerializeField] int turnPossibility;
+    float minTurnInterval;
+    float maxTurnInterval;
+    int turnPossibility;
+
+    float initialSpeed;
+    float maxSpeed;
+    float speedChangeIndex = 1f;
+    float speedChangeInSeconds = 10f;
 
     Vector2 direction;
     float xPos;
     float yPos;
     float timeToTurn;
+    float nextSpeedChange;
 
     void Start()
     {
+        initialSpeed = BirdSpawner.Instance.levelConfig.levels[0].initialSpeed;
+        maxSpeed = BirdSpawner.Instance.levelConfig.levels[0].maxSpeed;
+        speedChangeIndex = BirdSpawner.Instance.levelConfig.levels[0].speedChangeIndex;
+        speedChangeInSeconds = BirdSpawner.Instance.levelConfig.levels[0].speedChangeInSeconds;
+        scoreValue = BirdSpawner.Instance.levelConfig.levels[0].birdScoreValue;
+        minTurnInterval = BirdSpawner.Instance.levelConfig.levels[0].minTurnInterval;
+        maxTurnInterval = BirdSpawner.Instance.levelConfig.levels[0].maxTurnInterval;
+        turnPossibility = BirdSpawner.Instance.levelConfig.levels[0].turnPossibility;
+
         xPos = Random.Range(-1f, 1f);
         SetDirection();
+        nextSpeedChange = speedChangeInSeconds;
+        BirdSpawner.Instance.speed = initialSpeed;
     }
 
     void Update()
@@ -27,6 +43,7 @@ public class Bird : MonoBehaviour
         transform.localScale = (xPos < 0) ? new Vector2(1, 1) : new Vector2(-1, 1);
         Move();
         TurnByTime();
+        BirdSpeedChange();
     }
 
     private void Move()
@@ -71,5 +88,13 @@ public class Bird : MonoBehaviour
             SetDirection();     
         }
     }
-
+    void BirdSpeedChange()
+    {
+        if (speedChangeIndex != 0 && Time.time > nextSpeedChange 
+            && BirdSpawner.Instance.speed < maxSpeed)
+        {
+            BirdSpawner.Instance.speed *= speedChangeIndex;
+            nextSpeedChange = Time.time + speedChangeInSeconds;
+        }
+    }
 }

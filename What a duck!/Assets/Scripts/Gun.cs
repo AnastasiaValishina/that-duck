@@ -38,7 +38,12 @@ public class Gun : MonoBehaviour
     }
 
     void ButtonClicked()
-    {        
+    {
+        Shoot();
+    }
+
+    private void Shoot()
+    {
         if (bulletAmount > 0 && timeStamp <= Time.time)
         {
             Bullet bullet = Instantiate(bulletPrefab, gun.transform.position, Quaternion.identity);
@@ -46,19 +51,22 @@ public class Gun : MonoBehaviour
             bulletAmount--;
             bulletAmountText.text = bulletAmount.ToString();
             timeStamp = Time.time + timeBetweenShots;
+            shootButton.interactable = false;
 
             if (bulletAmount <= 0)
             {
                 StartCoroutine(CoolDown());
             }
-        }      
+        }
     }
 
     IEnumerator CoolDown()
     {
+        shootButton.interactable = false;
         coolDownImage.fillAmount = 1.0f;
         coolingDown = true;
         yield return new WaitForSeconds(coolDownTime);
+        shootButton.interactable = true;
         bulletAmount = bulletAmountFull;
         bulletAmountText.text = bulletAmount.ToString();
     }

@@ -5,20 +5,14 @@ using UnityEngine;
 public class BirdSpawner : MonoBehaviour
 {
     [SerializeField] Bird birdPrefab;
-    [SerializeField] float minDelay, maxDelay;
-    [SerializeField] float delayIndex = 1f;
-    [SerializeField] float delayChangeInSeconds;
-
-    [Header("Speed")]
+    public Levels levelConfig;
     public float speed;
-    [SerializeField] float initialSpeed;
-    [SerializeField] float maxSpeed;
-    [SerializeField] float speedChangeIndex = 1f;
-    [SerializeField] float speedChangeInSeconds = 10f;
 
+    float minDelay, maxDelay;
+    float delayIndex = 1f;
+    float delayChangeInSeconds = 10f;
     float nextSpawnTime;
     float nextSpawnTimeChange;
-    float nextSpeedChange;
 
     static BirdSpawner instance;
     public static BirdSpawner Instance
@@ -35,15 +29,17 @@ public class BirdSpawner : MonoBehaviour
 
     void Start()
     {
+        minDelay = levelConfig.levels[0].minDelay;
+        maxDelay = levelConfig.levels[0].maxDelay;
+        delayIndex = levelConfig.levels[0].delayIndex;
+        delayChangeInSeconds = levelConfig.levels[0].delayChangeInSeconds;
+
         nextSpawnTimeChange = delayChangeInSeconds;
-        nextSpeedChange = speedChangeInSeconds;
-        speed = initialSpeed;
     }
 
     void Update()
     {
         SpawnBird();
-        BirdSpeedChange();
     }
 
     void SpawnBird()
@@ -61,14 +57,6 @@ public class BirdSpawner : MonoBehaviour
                 maxDelay *= delayIndex;
                 nextSpawnTimeChange = Time.time + delayChangeInSeconds;
             }
-        }
-    }
-    void BirdSpeedChange()
-    {
-        if (speedChangeIndex != 0 && Time.time > nextSpeedChange && speed < maxSpeed)
-        {
-            speed *= speedChangeIndex;
-            nextSpeedChange = Time.time + speedChangeInSeconds;
         }
     }
 }
