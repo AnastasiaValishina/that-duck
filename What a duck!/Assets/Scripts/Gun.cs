@@ -51,7 +51,6 @@ public class Gun : MonoBehaviour
             bulletAmount--;
             bulletAmountText.text = bulletAmount.ToString();
             timeStamp = Time.time + timeBetweenShots;
-            shootButton.interactable = false;
 
             if (bulletAmount <= 0)
             {
